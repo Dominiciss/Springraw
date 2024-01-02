@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SpringrawApplication<springraw>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.dominicis.springraw.SpringrawApplication",
+            "projectName": "springraw",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
