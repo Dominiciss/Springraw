@@ -67,4 +67,47 @@ public class UserController {
 
         return new ResponseEntity<Object>(new User(id, username, password, new Date()), HttpStatus.OK);
     }
+
+    @GetMapping("/update")
+    public ResponseEntity<Object> update(@RequestParam Integer id, @RequestParam String username,
+            @RequestParam String password) {
+        if (dbFetcher.userDao().findAll().get(0).getId() == -1) {
+            synchronized (dbFetcher) {
+                try {
+                    dbFetcher.wait();
+                } catch (InterruptedException e) {
+                    System.err.println(e);
+                }
+            }
+        }
+
+        try {
+            dbFetcher.userDao().update(id, username, password);
+        } catch (UserException e) {
+            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<Object>(new User(id, username, password, new Date()), HttpStatus.OK);
+    }
+
+    @GetMapping("/delete")
+    public ResponseEntity<Object> create(@RequestParam Integer id) {
+        if (dbFetcher.userDao().findAll().get(0).getId() == -1) {
+            synchronized (dbFetcher) {
+                try {
+                    dbFetcher.wait();
+                } catch (InterruptedException e) {
+                    System.err.println(e);
+                }
+            }
+        }
+
+        try {
+            dbFetcher.userDao().delete(id);
+        } catch (UserException e) {
+            return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<Object>("User removed succesfully!", HttpStatus.OK);
+    }
 }
