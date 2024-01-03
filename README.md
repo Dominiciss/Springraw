@@ -2,7 +2,7 @@
 
 ## Deploy 🛫
 Springraw was deployed on render with a free version of docker, so it can take from 4 to 6 minutes for it to be deployed. If you want to visit the site, 
-[click here](https://springraw.onrender.com/api/user)
+[click here](https://springraw.onrender.com/api/user).
 
 ## Description 🗒️
 
