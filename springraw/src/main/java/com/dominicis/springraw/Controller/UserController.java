@@ -1,23 +1,16 @@
 package com.dominicis.springraw.Controller;
 
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import com.dominicis.springraw.DbFetcher;
-import com.dominicis.springraw.Config.AppCtxConfig;
-import com.dominicis.springraw.Dao.UserDao;
 import com.dominicis.springraw.Entity.User;
 import com.dominicis.springraw.Exception.UserException;
 
