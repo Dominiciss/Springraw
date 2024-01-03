@@ -9,13 +9,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -25,16 +21,22 @@ import com.dominicis.springraw.Exception.UserException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+// Indicates that it is a spring component
 @Component
+// DAO: Data access object
 public class UserDao {
+    // DataSource of database, where all info is fetched from
     private DataSource dataSource;
+    // User list pre-loaded for a better and faster client experience
     private List<User> users = new ArrayList<User>();
 
+    // Instantiate the datasource and a "unknown" user to have as reference
     public UserDao(DataSource dataSource) {
         this.dataSource = dataSource;
         users.add(new User(-1, null, null, null));
     }
 
+    // Initialization of user list
     public void instantiate() {
         try (Connection connection = dataSource.getConnection()) {
             Statement selectStatement = connection.createStatement();
@@ -66,6 +68,7 @@ public class UserDao {
     }
 
     public User create(Integer id, String username, String password, Date date) throws UserException {
+        // Looks if the user id has already been used
         if (users.stream().filter((user) -> user.getId().equals(id)).count() > 0) {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
                     .getRequest();
@@ -81,6 +84,7 @@ public class UserDao {
             throw new UserException("Duplicated id, user cannot use an id that has already been used");
         }
 
+        // Excecutes the update to the database in another thread, so the user has better loading times
         CompletableFuture.runAsync(() -> {
             Double time = (double) System.nanoTime();
             try (Connection connection = dataSource.getConnection()) {

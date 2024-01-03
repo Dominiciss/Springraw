@@ -13,7 +13,9 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 // App Context Configuration
 @Configuration
+// Enables @Schedule, an async clock that runs a method multiple times
 @EnableScheduling
+// Scan for @Component
 @ComponentScan
 public class AppCtxConfig {
     

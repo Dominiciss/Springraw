@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private DbFetcher dbFetcher;
 
-    @GetMapping("")
+    @GetMapping("") // /api/user
     public Object getAll() {
         if (dbFetcher.userDao().findAll().get(0).getId() == -1) {
             synchronized (dbFetcher) {
@@ -41,12 +41,12 @@ public class UserController {
         return dbFetcher.userDao().findAll();
     }
 
-    @GetMapping("/search")
+    @GetMapping("/search") // /api/user/search?username=?
     public Object getByName(@RequestParam String username) {
         return dbFetcher.userDao().findByName(username);
     }
 
-    @GetMapping("/create")
+    @GetMapping("/create") // /api/user/update?id=?&username=?&password=?
     public ResponseEntity<Object> create(@RequestParam Integer id, @RequestParam String username,
             @RequestParam String password) {
         if (dbFetcher.userDao().findAll().get(0).getId() == -1) {
@@ -68,7 +68,7 @@ public class UserController {
         return new ResponseEntity<Object>(new User(id, username, password, new Date()), HttpStatus.OK);
     }
 
-    @GetMapping("/update")
+    @GetMapping("/update") // /api/user/update?id=?&username=?&password=?
     public ResponseEntity<Object> update(@RequestParam Integer id, @RequestParam String username,
             @RequestParam String password) {
         if (dbFetcher.userDao().findAll().get(0).getId() == -1) {
@@ -90,7 +90,7 @@ public class UserController {
         return new ResponseEntity<Object>(new User(id, username, password, new Date()), HttpStatus.OK);
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/delete") // /api/user/delete?id=?
     public ResponseEntity<Object> create(@RequestParam Integer id) {
         if (dbFetcher.userDao().findAll().get(0).getId() == -1) {
             synchronized (dbFetcher) {
